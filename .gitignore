@@ -1,11 +1,7 @@
-*_files/
 *.swp
 *.Rhistory
 figure/
-*.html
 *.md
 *.docx
 .RData
-*-figure/
-*.pdf
-*.tex
+*.rmd

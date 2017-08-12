@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="优优码(http://www.uucode.net)" />
+  <title>无废话-Java 9新特性</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; } /* Keyword */
+code > span.dt { color: #dfdfbf; } /* DataType */
+code > span.dv { color: #dcdccc; } /* DecVal */
+code > span.bn { color: #dca3a3; } /* BaseN */
+code > span.fl { color: #c0bed1; } /* Float */
+code > span.ch { color: #dca3a3; } /* Char */
+code > span.st { color: #cc9393; } /* String */
+code > span.co { color: #7f9f7f; } /* Comment */
+code > span.ot { color: #efef8f; } /* Other */
+code > span.al { color: #ffcfaf; } /* Alert */
+code > span.fu { color: #efef8f; } /* Function */
+code > span.er { color: #c3bf9f; } /* Error */
+code > span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+code > span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code > span.sc { color: #dca3a3; } /* SpecialChar */
+code > span.vs { color: #cc9393; } /* VerbatimString */
+code > span.ss { color: #cc9393; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #f0dfaf; } /* ControlFlow */
+code > span.op { color: #f0efd0; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code > span.at { } /* Attribute */
+code > span.do { color: #7f9f7f; } /* Documentation */
+code > span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code > span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+</style>
+
+<link rel="stylesheet" href="index_files/reveal.js-3.3.0.1/css/theme/black.css" id="theme">
+
+<style type="text/css">
+.reveal section img {
+  background: rgba(255, 255, 255, 0.85);
+}
+</style>
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="res\temp-revealjs.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="index_files/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">无废话-Java 9新特性</h1>
+    <h2 class="author">优优码(<a href="http://www.uucode.net" class="uri">http://www.uucode.net</a>)</h2>
+    <h3 class="date">2017年8月</h3>
+</section>
+
+<section class="slide level3">
+<h1>如何阅读我？</h1>
+<ul>
+<li>大家看到<code>右下角</code>箭头了吗？向左的箭头表示下一章节，向下的箭头表示下一页</li>
+<li>看到<code>左下角</code>的菜单了吗，可以随意穿梭于整个文档</li>
+<li>那么开始愉快的阅读吧！</li>
+</ul>
+</section>
+<section><section class="titleslide slide level2"><h1>工具类</h1></section><section id="repl-jshell" class="slide level3">
+<h1>REPL: jshell</h1>
+<p>在JDK9中，多了一个jshell的可执行文件，可以像运行脚本一样解释执行Java，是不是很酷？</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">⋊&gt; ~ jshell
+|  Welcome to JShell -- Version <span class="dv">9</span>-ea
+|  For an introduction type: /help intro
+
+jshell&gt; <span class="dv">3</span> + <span class="dv">4</span> * <span class="dv">7</span>
+$<span class="dv">1</span> ==&gt; <span class="dv">31</span>
+
+jshell&gt; <span class="dt">int</span> <span class="fu">add</span>(<span class="dt">int</span> a, <span class="dt">int</span> b) {
+...&gt;   <span class="kw">return</span> a+b;
+...&gt; }
+|  created method <span class="fu">add</span>(<span class="dt">int</span>,<span class="dt">int</span>)
+
+jshell&gt; <span class="fu">add</span>(<span class="dv">25</span>, $<span class="dv">1</span>)
+$<span class="dv">3</span> ==&gt; <span class="dv">56</span></code></pre></div>
+<p>可以使用 <code>/help</code> 或者 <code>/help shortcuts</code>得到更多帮助信息</p>
+</section><section id="html5-javadoc" class="slide level3">
+<h1>HTML5 Javadoc</h1>
+<ul>
+<li>通过 <code>-html5</code> 参数启用HTML5 javadoc 新特性</li>
+<li>梦幻般的搜索功能</li>
+<li>HTML5 &amp; updated Doclet API</li>
+<li>增强的DocLint: <code>-Xdoclint/package:java.\*,javax.\*</code></li>
+</ul>
+</section><section id="html5-javadoc-" class="slide level3">
+<h1>HTML5 Javadoc 一睹为快</h1>
+<p><img src="res/my/javadoc-html5-example.png" /></p>
+</section><section class="slide level3">
+<h1>交叉编译</h1>
+<p><code>javac - release N</code></p>
+<p>等价于</p>
+<p><code>javac -source N -target N –bootclasspath rtN.jar ...</code></p>
+</section><section id="." class="slide level3">
+<h1>语言增强.</h1>
+<ul>
+<li>进程控制 <a href="https://github.com/bentolor/java9-in-action/blob/master/playground/src/main/java/de/exxcellent/java9/process/ControlProcess.java">ControlProcess.java</a></li>
+<li>增强集合操作<a href="https://github.com/bentolor/java9-in-action/blob/master/playground/src/main/java/de/exxcellent/java9/collections/ImmutableCollections.java">ImmutableCollections.java</a>
+<ul>
+<li><code>List/Map/Set.of(1, 2, 3);</code></li>
+</ul></li>
+<li>StackWalker <a href="https://github.com/bentolor/java9-in-action/blob/master/playground/src/main/java/de/exxcellent/java9/util/StackWalkerExample.java">StackWalkerExample.java</a></li>
+</ul>
+</section><section id=".." class="slide level3">
+<h1>语言增强..</h1>
+<ul>
+<li>获得包名
+<ul>
+<li><code>this.getClass().getPackageName()</code></li>
+</ul></li>
+<li>增强的Deprecated
+<ul>
+<li><code>@Deprecated(since =&quot;1.5&quot;, forRemoval = true)</code></li>
+</ul></li>
+<li>HTTP/2 Client</li>
+</ul>
+</section><section class="slide level3">
+<h1>进程控制</h1>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">// Get PIDs of own or started processes</span>
+out.<span class="fu">println</span>(<span class="st">&quot;Your pid is &quot;</span> + ProcessHandle.<span class="fu">current</span>().<span class="fu">getPid</span>());
+
+Process p = Runtime.<span class="fu">getRuntime</span>().<span class="fu">exec</span>(<span class="st">&quot;sleep 1h&quot;</span>);
+ProcessHandle h = ProcessHandle.<span class="fu">of</span>(p.<span class="fu">getPid</span>())  <span class="co">// Optional</span>
+        .<span class="fu">orElseThrow</span>(IllegalStateException::<span class="kw">new</span>);
+
+<span class="co">// Do things on exiting process          // CompletableFuture</span>
+h.<span class="fu">onExit</span>().<span class="fu">thenRun</span>( ()-&gt; out.<span class="fu">println</span>(<span class="st">&quot;Sleeper exited&quot;</span>) );
+
+<span class="co">// Get info on process</span>
+out<span class="fu">.printf</span>(<span class="st">&quot;[</span><span class="ch">%d</span><span class="st">] </span><span class="ch">%s</span><span class="st"> - </span><span class="ch">%s\n</span><span class="st">&quot;</span>, h.<span class="fu">getPid</span>(),
+           h.<span class="fu">info</span>().<span class="fu">user</span>().<span class="fu">orElse</span>(<span class="st">&quot;unknown&quot;</span>),
+           h.<span class="fu">info</span>().<span class="fu">commandLine</span>().<span class="fu">orElse</span>(<span class="st">&quot;none&quot;</span>));
+
+<span class="co">// Kill a process</span>
+h.<span class="fu">destroy</span>();</code></pre></div>
+</section><section class="slide level3">
+<h1>增强集合操作</h1>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/* Comment sections would break ... */</span>
+List&lt;Integer&gt; listOfNumbers = List.<span class="fu">of</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span><span class="co">/*, null*/</span>);
+
+Set&lt;Integer&gt; setOfNumbers = Set.<span class="fu">of</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span><span class="co">/*, 1*/</span>);
+
+Map&lt;String, String&gt; mapOfString =
+    Map.<span class="fu">of</span>(<span class="st">&quot;key1&quot;</span>, <span class="st">&quot;value1&quot;</span>, <span class="st">&quot;key2&quot;</span>, <span class="st">&quot;value2&quot;</span>);
+
+Map&lt;String, String&gt; moreMapOfString =
+    Map.<span class="fu">ofEntries</span>(
+        Map.<span class="fu">entry</span>(<span class="st">&quot;key1&quot;</span>, <span class="st">&quot;value1&quot;</span>),
+        Map.<span class="fu">entry</span>(<span class="st">&quot;key2&quot;</span>, <span class="st">&quot;value2&quot;</span>)<span class="co">/*,</span>
+<span class="co">        Map.entry(&quot;key1&quot;, &quot;value3&quot;)*/</span>
+);</code></pre></div>
+</section><section id="stackwalker" class="slide level3">
+<h1>StackWalker</h1>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">// return class/method only for our classes.</span>
+<span class="kw">private</span> <span class="dt">static</span> List&lt;String&gt; <span class="fu">walkAndFilterStackframe</span>() {
+  <span class="kw">return</span> StackWalker.<span class="fu">getInstance</span>().<span class="fu">walk</span>(s -&gt;
+    s.<span class="fu">map</span>( frame-&gt; frame.<span class="fu">getClassName</span>()+<span class="st">&quot;/&quot;</span>+frame.<span class="fu">getMethodName</span>())
+           .<span class="fu">filter</span>(name -&gt; name.<span class="fu">startsWith</span>(<span class="st">&quot;de.exxcellent&quot;</span>))
+           .<span class="fu">limit</span>(<span class="dv">10</span>)
+           .<span class="fu">collect</span>(Collectors.<span class="fu">toList</span>()) );
+}</code></pre></div>
+</section><section id="http2-client" class="slide level3">
+<h1>HTTP/2 Client</h1>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
+<span class="co"> * The HTTP API functions asynchronously &amp; synchronously. In</span>
+<span class="co"> * asynchronous mode, work is done in threads (ExecutorService).</span>
+<span class="co"> */</span>
+<span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args) <span class="kw">throws</span> Exception {
+  HttpClient.<span class="fu">getDefault</span>()
+    .<span class="fu">request</span>(URI.<span class="fu">create</span>(<span class="st">&quot;https://www.exxcellent.de&quot;</span>))
+    .<span class="fu">GET</span>()
+    .<span class="fu">responseAsync</span>() <span class="co">// CompletableFuture :D</span>
+    .<span class="fu">thenAccept</span>(httpResponse -&gt;
+        out.<span class="fu">println</span>(httpResponse.<span class="fu">body</span>(HttpResponse.<span class="fu">asString</span>()))
+    );
+  Thread.<span class="fu">sleep</span>(<span class="dv">999</span>); <span class="co">// Give worker thread some time.</span>
+}</code></pre></div>
+</section></section>
+<section><section id="jigsaw" class="titleslide slide level2"><h1>令人兴奋的JIGSAW</h1></section><section id="jigsaw" class="slide level3">
+<h1>什么是JIGSAW</h1>
+<ul>
+<li>Java的模块化系统。提供比Jar更好的封装性。</li>
+<li>public方法不在对外public</li>
+<li>暂无模块版本支持</li>
+</ul>
+</section><section id="jigsawhello-world1" class="slide level3">
+<h1>JIGSAW之Hello World(1)</h1>
+<p><code>module-info.java</code> 文件用于定义依赖</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">module com.<span class="fu">mysql</span>.<span class="fu">jdbc</span> {
+    <span class="co">// Module dependency</span>
+    requires java.<span class="fu">sql</span>;
+
+    <span class="co">// exported package in module</span>
+    exports com.<span class="fu">mysql</span>.<span class="fu">jdbc</span>;
+
+    <span class="co">// Implements service with instance</span>
+    provides java.<span class="fu">sql</span>.<span class="fu">Driver</span> with com.<span class="fu">mysql</span>.<span class="fu">jdbc</span>.<span class="fu">Driver</span>;
+}</code></pre></div>
+</section><section id="jigsawhello-world2" class="slide level3">
+<h1>JIGSAW之Hello World(2)</h1>
+<ul>
+<li><p>在<code>javac</code>和<code>java</code>中启用模块支持</p>
+<pre><code>javac -mp modulepath ...
+java  -mp modulepath -m modulename/moduleclass</code></pre></li>
+<li>链接
+<ul>
+<li><code>jlink</code>用于链接一组模块，同时，它也能处理模块的传递依赖。</li>
+</ul></li>
+</ul>
+</section><section id="serviceloader1" class="slide level3">
+<h1>使用模块的ServiceLoader(1)</h1>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> BillingService {
+
+  <span class="kw">public</span> <span class="dt">static</span> BillingService <span class="fu">getInstance</span>() {
+    <span class="co">// Java SPI to find the instance</span>
+    ServiceLoader&lt;BillingServiceProvider&gt; sl =
+       ServiceLoader.<span class="fu">load</span>(BillingServiceProvider.<span class="fu">class</span>);
+
+    <span class="co">// Fetch first provider implementation</span>
+    Iterator&lt;BillingServiceProvider&gt; it = sl.<span class="fu">iterator</span>();
+
+    <span class="kw">return</span> it.<span class="fu">next</span>().<span class="fu">buildBillingService</span>();
+  }
+
+  <span class="kw">public</span> <span class="kw">abstract</span> String <span class="fu">takeMoney</span>();
+}</code></pre></div>
+</section><section id="serviceloader2" class="slide level3">
+<h1>使用模块的ServiceLoader(2)</h1>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">module anothermodule {
+  exports de.<span class="fu">exxcellent</span>.<span class="fu">anothermodule</span>;
+  requires de.<span class="fu">exxcellent</span>.<span class="fu">java9</span>;
+
+  <span class="co">// Provide Service instance (SPI with Jigsaw modules)</span>
+  provides de.<span class="fu">exxcellent</span>.<span class="fu">java9</span>.<span class="fu">jigsaw</span>.<span class="fu">spi</span>.<span class="fu">BillingServiceProvider</span>
+  with de.<span class="fu">exxcellent</span>.<span class="fu">anothermodule</span>.<span class="fu">spi</span>.<span class="fu">MastercardBillingServiceProvider</span>;
+}</code></pre></div>
+</section><section id="jigsawhello-world3" class="slide level3">
+<h1>JIGSAW之Hello World(3)</h1>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mkdir</span> -p target/module/de.exxcellent.java9
+$ <span class="kw">mkdir</span> -p target/module/anothermodule
+
+$ <span class="kw">javac</span> <span class="ot">$(</span><span class="kw">find</span> playground/src/main/java -name <span class="st">&quot;*.java&quot;</span><span class="ot">)</span> \
+        -d target/module/de.exxcellent.java9
+$ <span class="kw">javac</span> <span class="ot">$(</span><span class="kw">find</span> playground-dependent/src/main/java -name <span class="st">&quot;*.java&quot;</span><span class="ot">)</span>\
+        -d target/module/anothermodule \
+        -modulepath target/module
+
+$ <span class="kw">java</span>  -modulepath target/module \
+        -m anothermodule/de.exxcellent.anothermodule.TestJigsawSPI
+<span class="kw">Mastercard</span> billed the money!</code></pre></div>
+</section><section id="jigsaw" class="slide level3">
+<h1>JIGSAW相关工具</h1>
+<ul>
+<li>列出内置模块: <code>java –listmods</code></li>
+<li>查找依赖:<code>jdeps –jdkinternals app.jar</code></li>
+</ul>
+</section></section>
+<section><section id="httpsbentolor.github.iojava9-in-action" class="titleslide slide level2"><h1>参考(<a href="https://bentolor.github.io/java9-in-action" class="uri">https://bentolor.github.io/java9-in-action</a>)</h1></section></section>
+    </div>
+  </div>
+
+  <script src="index_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="index_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: true,
+        // Enable slide navigation via mouse wheel
+        mouseWheel: true,
+        // Transition style
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+        menu: {
+          custom: false,
+          themes: false,
+          transitions: false
+        },
+
+
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'index_files/reveal.js-3.3.0.1/plugin/menu/menu.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+		<!-- Everything below this point is only used for the reveal.js demo page -->
+
+		<a class="fork-reveal" style="display: none;" href="http://www.uucode.net"><img style="position: absolute; top: 0; right: 0; border: 0;" src="res/logo_right_top.png" alt="由优优码(www.uucode.net)制作"></a>
+
+		<div class="share-reveal" style="display: none; position: absolute; bottom: 16px; left: 50%; margin-left: -139px; z-index: 20;">
+		<a class="share-reveal-editor" href="http://www.uucode.net/dashang/alipay2_small.png" target="_blank" onmouseover="showImg()" onmouseout="hideImg()" style="text-align:center">支付宝打赏
+          <div id="alipay2">
+            <img src="http://www.uucode.net/dashang/alipay2_small.png" />
+		  </div>
+        </a>
+		<!-- 
+		<a class="share-reveal-facebook" href="#">
+		</a>
+		-->
+		</div>
+		<script>
+           function showImg() {
+                var ele = document.getElementById("alipay2");
+				ele.style.visibility = "visible";
+			}
+
+			function hideImg() {
+				var ele = document.getElementById("alipay2")
+				ele.style.visibility = "hidden";
+			}
+		</script>
+		<style>
+			/* Social sharing */
+			.share-reveal a {
+				display: inline-block;
+				height: 34px;
+				line-height: 32px;
+				padding: 0 10px;
+				color: #fff;
+				font-family: Helvetica, sans-serif;
+				text-decoration: none;
+				font-weight: bold;
+				font-size: 12px;
+				vertical-align: top;
+				text-transform: uppercase;
+				box-sizing: border-box;
+			}
+
+			.share-reveal .share-reveal-editor {
+				line-height: 30px;
+			}
+
+			.share-reveal svg {
+				vertical-align: middle;
+			}
+
+			.share-reveal a + a {
+				margin-left: 10px;
+			}
+
+			.share-reveal-editor {
+				border: 2px solid #fff;
+			}
+
+			.share-reveal-twitter,
+			.share-reveal-follow {
+				background-color: #00aced;
+			}
+
+			.share-reveal-facebook {
+				background-color: #4B71B8;
+			}
+
+			/* Advertising */
+			#carbonads {
+				width: 370px;
+				min-height: 100px;
+				font-size: 18px;
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				padding: 10px;
+				margin: 40px auto 0 auto;
+				font-size: 16px;
+				z-index: 10;
+				text-align: left;
+			}
+
+			#carbonads .carbon-img img {
+				float: left;
+				margin: 0 10px 0 0;
+				border: 0;
+				box-shadow: none;
+			}
+
+			#carbonads .carbon-poweredby {
+				display: block;
+				margin-top: 10px;
+				color: #aaa;
+			}
+		</style>
+
+		<script>
+			[].slice.call( document.querySelectorAll( '.share-reveal-facebook, .share-reveal-twitter' ) ).forEach( function( element ) {
+				element.addEventListener( 'click', function( event ) {
+					event.preventDefault();
+					var width = 500, height = 300;
+					var winTop = window.screenY + (window.screen.height / 2) - (height / 2);
+					var winLeft = window.screenX + (window.screen.width / 2) - (width / 2);
+					window.open(this.href, 'shre', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + width + ',height=' + height);
+				} );
+			} );
+
+			if( !navigator.userAgent.match( /(iphone|android)/gi ) && !!document.querySelector ) {
+				document.querySelector( '.share-reveal' ).style.display = 'block';
+				document.querySelector( '.fork-reveal' ).style.display = 'block';
+			}
+		</script>
+
+		<a class="share-reveal-facebook" href="#">
+<!-- JiaThis Button BEGIN -->
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jiathis_r.js?type=left&amp;move=0&amp;btn=l4.gif" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+		</a>
+
+<script language="javascript" src="http://count29.51yes.com/click.aspx?id=299702422&logo=11" charset="gb2312"></script>
+
+  </body>
+</html>
